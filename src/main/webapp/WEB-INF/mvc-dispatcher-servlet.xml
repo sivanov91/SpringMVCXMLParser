@@ -1,0 +1,45 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:oxm="http://www.springframework.org/schema/oxm"
+
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/oxm
+        http://www.springframework.org/schema/oxm/spring-oxm.xsd">
+
+	<context:component-scan base-package="ru.myproject" />
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="prefix" value="/WEB-INF/pages/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
+	<mvc:annotation-driven />
+
+    <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- setting maximum upload size -->
+        <property name="maxUploadSize" value="100000" />
+    </bean>
+
+    <oxm:jaxb2-marshaller id="jaxbMarshallerBean">
+        <oxm:class-to-be-bound name="ru.myproject.domain.CustomersType"/>
+        <oxm:class-to-be-bound name="ru.myproject.domain.CustomerType"/>
+        <oxm:class-to-be-bound name="ru.myproject.domain.OrdersType"/>
+        <oxm:class-to-be-bound name="ru.myproject.domain.OrderType"/>
+        <oxm:class-to-be-bound name="ru.myproject.domain.PositionsType"/>
+        <oxm:class-to-be-bound name="ru.myproject.domain.PositionType"/>
+    </oxm:jaxb2-marshaller>
+
+
+
+</beans>
